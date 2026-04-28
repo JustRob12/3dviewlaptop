@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { QrCode, MonitorPlay, X, ScanLine, Cpu, Box, Smartphone } from "lucide-react";
+import { QrCode, MonitorPlay, X, Cpu, Box } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
 const LAPTOP_DATA = {
+  id: "asus_rog_strix_scar_17_2023_g733_gaming_laptop",
   name: "ROG Strix SCAR 17",
   brand: "ASUS",
   description: "Beat the Best. Break all limits with the newest ROG Strix SCAR 17. The ultimate 17-inch gaming laptop with unprecedented performance.",
@@ -13,12 +14,12 @@ const LAPTOP_DATA = {
 };
 
 export default function Home() {
-  const [showARModal, setShowARModal] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
   const [arUrl, setArUrl] = useState("");
 
   useEffect(() => {
-    // Generate the URL pointing to our new static AR.js page
-    setArUrl(`${window.location.origin}/ar.html`);
+    // URL pointing to the WebXR Markerless AR Page
+    setArUrl(`${window.location.origin}/ar/${LAPTOP_DATA.id}`);
   }, []);
 
   return (
@@ -50,8 +51,8 @@ export default function Home() {
           className="flex flex-col gap-6"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 w-fit text-sm font-medium mb-2">
-            <ScanLine size={14} />
-            <span>Marker-Based AR Experience</span>
+            <Cpu size={14} />
+            <span>Table-Aware AR Experience</span>
           </div>
           
           <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]">
@@ -76,11 +77,11 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <button
-              onClick={() => setShowARModal(true)}
+              onClick={() => setShowQRModal(true)}
               className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-2xl font-semibold transition-all shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] hover:shadow-[0_0_60px_-15px_rgba(59,130,246,0.7)] hover:-translate-y-1"
             >
               <QrCode size={20} />
-              Open AR Tracker
+              Generate AR QR Code
             </button>
           </div>
         </motion.div>
@@ -108,87 +109,64 @@ export default function Home() {
             
             <div className="text-center z-10">
               <h3 className="text-xl font-bold">{LAPTOP_DATA.name}</h3>
-              <p className="text-slate-400 text-sm mt-1">Ready for Marker-Based AR</p>
+              <p className="text-slate-400 text-sm mt-1">WebXR Table Tracking</p>
             </div>
           </div>
         </motion.div>
 
       </div>
 
-      {/* AR Marker Setup Modal Overlay */}
+      {/* QR Code Modal Overlay */}
       <AnimatePresence>
-        {showARModal && (
+        {showQRModal && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl max-w-4xl w-full relative overflow-hidden flex flex-col md:flex-row"
+              className="bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl max-w-sm w-full relative overflow-hidden"
             >
-              {/* Close Button */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
+              
               <button 
-                onClick={() => setShowARModal(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full transition-colors z-20"
+                onClick={() => setShowQRModal(false)}
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full transition-colors"
               >
                 <X size={20} />
               </button>
-
-              <div className="flex flex-col items-center justify-center p-8 w-full max-w-md mx-auto relative">
-                
-                <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">AR Tracker Card</h3>
-                <p className="text-slate-400 text-center text-sm mb-8">
-                  Scan the QR code to open the app, then keep your camera pointed at the Hiro symbol above it.
-                </p>
-
-                {/* The Unified Card Element */}
-                <div className="bg-white p-6 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(59,130,246,0.5)] flex flex-col items-center gap-6 relative border-[8px] border-slate-100">
-                  
-                  {/* Top: Hiro Marker */}
-                  <div className="flex flex-col items-center">
-                    <img 
-                      src="https://jeromeetienne.github.io/AR.js/data/images/hiro.png" 
-                      alt="Hiro AR Marker" 
-                      className="w-[200px] h-[200px] object-contain border-4 border-slate-200 rounded-xl"
-                    />
-                    <span className="text-slate-400 text-[10px] font-bold tracking-widest mt-2 uppercase">AR Anchor</span>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="w-full h-px bg-slate-200 relative">
-                    <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-slate-300">
-                      <ScanLine size={16} />
-                    </div>
-                  </div>
-
-                  {/* Bottom: QR Code */}
-                  <div className="flex flex-col items-center">
-                    {arUrl ? (
-                      <QRCodeSVG 
-                        value={arUrl} 
-                        size={120}
-                        bgColor="#ffffff"
-                        fgColor="#0f172a"
-                        level="H"
-                        includeMargin={false}
-                      />
-                    ) : (
-                      <div className="w-[120px] h-[120px] bg-slate-100 rounded-lg animate-pulse" />
-                    )}
-                    <span className="text-slate-400 text-[10px] font-bold tracking-widest mt-3 uppercase">Scan to Start</span>
-                  </div>
-
-                </div>
-
-                <p className="text-xs text-slate-500 mt-8 flex items-center gap-2">
-                  <Smartphone size={14} /> Tip: You can print this card out!
+              
+              <div className="text-center mt-4 mb-8">
+                <h3 className="text-2xl font-bold text-white mb-2">Scan to View AR</h3>
+                <p className="text-slate-400 text-sm">
+                  Point your phone's camera at this code. The AR Viewer will open and place the laptop on your table!
                 </p>
               </div>
-
+              
+              <div className="bg-white p-6 rounded-2xl mx-auto w-fit shadow-[0_10px_40px_-10px_rgba(59,130,246,0.3)]">
+                {arUrl ? (
+                  <QRCodeSVG 
+                    value={arUrl} 
+                    size={200}
+                    bgColor="#ffffff"
+                    fgColor="#0f172a"
+                    level="H"
+                    includeMargin={false}
+                  />
+                ) : (
+                  <div className="w-[200px] h-[200px] flex items-center justify-center bg-slate-100 rounded-lg">
+                    <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+              </div>
+              
+              <div className="mt-8 text-center text-xs text-slate-500 font-mono break-all bg-slate-950 p-3 rounded-xl border border-slate-800">
+                {arUrl}
+              </div>
             </motion.div>
           </motion.div>
         )}
