@@ -147,7 +147,7 @@ export default function ARViewerPage() {
           src={`/models/${modelId}/scene.gltf`}
           alt="A 3D model of a laptop"
           ar={true}
-          ar-modes="webxr scene-viewer quick-look"
+          ar-modes="webxr"
           ar-scale="auto"
           camera-controls={true}
           touch-action="pan-y"
