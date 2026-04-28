@@ -138,55 +138,54 @@ export default function Home() {
                 <X size={20} />
               </button>
 
-              {/* Step 1: Connect Phone */}
-              <div className="flex-1 p-8 md:p-12 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col items-center justify-center text-center">
-                <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center mb-6">
-                  <span className="text-xl font-bold">1</span>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-2">Connect your Phone</h3>
-                <p className="text-slate-400 text-sm mb-8">
-                  Scan this QR code with your phone's camera to open the AR view.
-                </p>
+              <div className="flex flex-col items-center justify-center p-8 w-full max-w-md mx-auto relative">
                 
-                <div className="bg-white p-4 rounded-2xl shadow-inner">
-                  {arUrl ? (
-                    <QRCodeSVG 
-                      value={arUrl} 
-                      size={180}
-                      bgColor="#ffffff"
-                      fgColor="#0f172a"
-                      level="H"
-                      includeMargin={false}
-                    />
-                  ) : (
-                    <div className="w-[180px] h-[180px] bg-slate-100 rounded-lg animate-pulse" />
-                  )}
-                </div>
-                <p className="text-xs text-slate-500 font-mono mt-6 break-all">
-                  {arUrl}
+                <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">AR Tracker Card</h3>
+                <p className="text-slate-400 text-center text-sm mb-8">
+                  Scan the QR code to open the app, then keep your camera pointed at the Hiro symbol above it.
                 </p>
-              </div>
 
-              {/* Step 2: Scan Marker */}
-              <div className="flex-1 p-8 md:p-12 flex flex-col items-center justify-center text-center bg-slate-800/20">
-                <div className="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center mb-6">
-                  <span className="text-xl font-bold">2</span>
+                {/* The Unified Card Element */}
+                <div className="bg-white p-6 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(59,130,246,0.5)] flex flex-col items-center gap-6 relative border-[8px] border-slate-100">
+                  
+                  {/* Top: Hiro Marker */}
+                  <div className="flex flex-col items-center">
+                    <img 
+                      src="https://jeromeetienne.github.io/AR.js/data/images/hiro.png" 
+                      alt="Hiro AR Marker" 
+                      className="w-[200px] h-[200px] object-contain border-4 border-slate-200 rounded-xl"
+                    />
+                    <span className="text-slate-400 text-[10px] font-bold tracking-widest mt-2 uppercase">AR Anchor</span>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="w-full h-px bg-slate-200 relative">
+                    <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-slate-300">
+                      <ScanLine size={16} />
+                    </div>
+                  </div>
+
+                  {/* Bottom: QR Code */}
+                  <div className="flex flex-col items-center">
+                    {arUrl ? (
+                      <QRCodeSVG 
+                        value={arUrl} 
+                        size={120}
+                        bgColor="#ffffff"
+                        fgColor="#0f172a"
+                        level="H"
+                        includeMargin={false}
+                      />
+                    ) : (
+                      <div className="w-[120px] h-[120px] bg-slate-100 rounded-lg animate-pulse" />
+                    )}
+                    <span className="text-slate-400 text-[10px] font-bold tracking-widest mt-3 uppercase">Scan to Start</span>
+                  </div>
+
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">Scan the Marker</h3>
-                <p className="text-slate-400 text-sm mb-8">
-                  Once the AR page opens on your phone, point it at this symbol. The 3D laptop will pop up exactly here!
-                </p>
-                
-                <div className="bg-white p-4 rounded-2xl shadow-[0_0_50px_-10px_rgba(168,85,247,0.3)]">
-                  {/* Standard Hiro Marker Image for AR.js tracking */}
-                  <img 
-                    src="https://jeromeetienne.github.io/AR.js/data/images/hiro.png" 
-                    alt="Hiro AR Marker" 
-                    className="w-[180px] h-[180px] object-contain"
-                  />
-                </div>
-                <p className="text-xs text-slate-400 mt-6 flex items-center gap-2">
-                  <Smartphone size={14} /> Keep this open on your screen
+
+                <p className="text-xs text-slate-500 mt-8 flex items-center gap-2">
+                  <Smartphone size={14} /> Tip: You can print this card out!
                 </p>
               </div>
 
